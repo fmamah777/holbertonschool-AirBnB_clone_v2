@@ -127,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
             kwarg_list = attr.split('=')
             if '\"' in kwarg_list[1]:
                 kwarg_list[1] = kwarg_list[1][1:-1]
-                kwarg_list[1].replace('_', '')
+                kwarg_list[1] = kwarg_list[1].replace('_', ' ')
             else:
                 kwarg_list[1] = eval(kwarg_list[1])
             if hasattr(new_instance, kwarg_list[0]):
