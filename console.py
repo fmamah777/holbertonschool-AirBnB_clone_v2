@@ -124,12 +124,14 @@ class HBNBCommand(cmd.Cmd):
             return
         new_instance = HBNBCommand.classes[arg_list[0]]()
         for attr in arg_list[1:]:
-            my_list = attr.split('=')
-            if '\"' in my_list[1]:
-                my_list[1] = my_list[1][1:-1]
+            kwarg_list = attr.split('=')
+            if '\"' in kwarg_list[1]:
+                kwarg_list[1] = kwarg_list[1][1:-1]
+                kwarg_list[1].replace('_', '')
             else:
-                my_list[1] = eval(my_list[1])
-            setattr(new_instance, my_list[0], my_list[1])
+                kwarg_list[1] = eval(kwarg_list[1])
+            if hasattr(new_instance, kwarg_list[0]):
+                setattr(new_instance, kwarg_list[0], kwarg_list[1])
         print(new_instance.id)
         storage.new(new_instance)
         storage.save()
