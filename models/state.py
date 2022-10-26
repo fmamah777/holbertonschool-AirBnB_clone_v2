@@ -4,21 +4,23 @@ from models.base_model import BaseModel
 from models.base_model import Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+import os
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     """ State class """
 
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
-    cities = relationship(
-        "City",
-        backref="State",
-        cascade="all, delete, delete-orphan"
-    )
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        cities = relationship(
+            "City",
+            backref="State",
+            cascade="all, delete, delete-orphan"
+        )
 
     @property
-    def cities(self): # +T6
+    def cities(self):
         """Returns a list of City instances with state_id = id"""
         cities = []
         for thing in models.storage.all(City).values():
