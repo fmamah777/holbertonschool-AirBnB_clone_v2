@@ -1,6 +1,15 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel
+""" Place Module for HBNB project """
+from models.base_model import BaseModel, Base
+from models.review import Review
+from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
+from sqlalchemy.orm import relationship
+from os import getenv
+import models
+from os import getenv
+from models.amenity import Amenity
 
 
 class Place(BaseModel):
