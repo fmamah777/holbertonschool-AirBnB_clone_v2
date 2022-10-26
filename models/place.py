@@ -1,18 +1,11 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-<<<<<<< HEAD
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer,String, ForeignKey, Float
-=======
 from models.base_model import BaseModel 
->>>>>>> 2e057ddf84f5f3a1577035b6e53136ca68daff23
 
-<<<<<<< HEAD
 
 class Place(BaseModel, Base):
-=======
-class Place(BaseModel):
->>>>>>> 2e057ddf84f5f3a1577035b6e53136ca68daff23
     """ A place to stay """
     __tablename__ = "places"
     city_id = Column(String(60), ForeignKey("cities.id"),nullable = False)
