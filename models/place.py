@@ -18,4 +18,7 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable = False, default = 0)
     latitude = Column(Float)
     longitude = Column(Float)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1fddf303adab81efe93599ebd356539c407d25b9
