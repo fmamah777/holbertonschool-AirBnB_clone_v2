@@ -18,12 +18,12 @@ class State(BaseModel, Base):
             backref="state",
             cascade="all, delete-orphan"
         )
-
-    @property
-    def cities(self):
-        """Returns a list of City instances with state_id = id"""
-        cities = []
-        for thing in models.storage.all(City).values():
-            if thing.state_id == self.id:
-                cities.append(thing)
-        return cities
+    else:
+        @property
+        def cities(self):
+            """Returns a list of City instances with state_id = id"""
+            cities = []
+            for thing in models.storage.all(City).values():
+                if thing.state_id == self.id:
+                    cities.append(thing)
+            return cities
