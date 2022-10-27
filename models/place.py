@@ -21,14 +21,30 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
-        reviews = relationship('Review', backref='places',
+        reviews = relationship('Review', backref='place',
                                cascade='all, delete, delete-orphan')
+        amenities = relationship("Amenity", secondary="place_amenity",
+                                backref="place_amenities",
+                                viewonly=False)
     else:
         @property
         def reviews(self):
-            """returns list of related reviews"""
+            """Attribute for FileStorage"""
             review_list = []
-            for obj in models.storage.all(City).values():
-                if obj.place_id == self.id:
-                    review_list.append(obj)
-            return obj
+            for el in models.storage.all(Review).values():
+                if el.place_id == self.id:
+                    review_list.append(el)
+            # return review_list
+
+        @property
+        def amenities(self):
+            """Returns a list of Amenities"""
+            all_amenities = models.storage.all(Amenity)
+            amenities = [amen for amen in all_amenities.values()
+                         if amen.id == self.amenity_ids]
+
+        @amenities.setter
+        def amenities(self, value):
+            """Sets amenities into amenity_ids[]"""
+            if isinstance(value, Amenity):
+                amenity_ids.append(value.id)
