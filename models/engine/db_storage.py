@@ -18,7 +18,7 @@ class DBStorage():
 
     __engine = None
     __session = None
-
+    
     def __init__(self):
         user = os.getenv("HBNB_MYSQL_USER")
         password = os.getenv("HBNB_MYSQL_PWD")
@@ -28,7 +28,7 @@ class DBStorage():
                                       .format(user, password, host, database),
                                       pool_pre_ping=True)
         if os.getenv("HBNB_ENV") == 'test':
-            Base.metadata
+            Base.metadata.dropall(self.__engine)
 
     def all(self, cls=None):
         """lists all objects of class, or objects of all classes
