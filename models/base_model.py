@@ -17,23 +17,16 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Instantiates a new model"""
-        from models import storage
-        if self.id is None:
+        if not kwargs:
             self.id = str(uuid.uuid4())
-        if self.created_at is None:
             self.created_at = datetime.now()
-        if self.updated_at is None:
             self.updated_at = datetime.now()
-        storage.new(self)
-        if kwargs:
-            if 'updated_at' in kwargs:
-                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                         '%Y-%m-%dT%H:%M:%S.%f')
-            if 'created_at' in kwargs:
-                kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                         '%Y-%m-%dT%H:%M:%S.%f')
-            if '__class__' in kwargs:
-                del kwargs['__class__']
+        else:
+            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
+            del kwargs['__class__']
             self.__dict__.update(kwargs)
 
     def __str__(self):
