@@ -214,7 +214,9 @@ class HBNBCommand(cmd.Cmd):
 
         args = args.split(' ')[0]  # remove possible trailing args
         if getenv("HBNB_TYPE_STORAGE") == "db":
-            storage.all(args)
+            obj_dict = storage.all(args)
+            for value in obj_dict.values():
+                print_list.append(str(value))
         else:
             if args and args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
