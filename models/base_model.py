@@ -28,6 +28,7 @@ class BaseModel:
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             del kwargs['__class__']
             self.__dict__.update(kwargs)
+            print('used kwargs')
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -53,7 +54,6 @@ class BaseModel:
             dictionary['updated_at'] = self.updated_at.isoformat()
         if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
-        print(dictionary)
         return dictionary
 
     def delete(self):
