@@ -31,4 +31,4 @@ class Place(BaseModel, Base):
             for obj in models.storage.all(City).values():
                 if obj.place_id == self.id:
                     review_list.append(obj)
-            return obj
+            return objj
