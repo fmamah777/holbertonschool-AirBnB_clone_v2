@@ -32,4 +32,3 @@ class Place(BaseModel, Base):
                 if obj.place_id == self.id:
                     review_list.append(obj)
             return obj
-
