@@ -29,7 +29,6 @@ class BaseModel:
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             del kwargs['__class__']
             self.__dict__.update(kwargs)
-            print('used kwargs')
 
     def __str__(self):
         """Returns a string representation of the instance"""
