@@ -60,3 +60,7 @@ class FileStorage:
             self.__objects.pop(key, None)
         elif obj is None:
             return
+
+    def close(self):
+        """closes session"""
+        self.reload()
