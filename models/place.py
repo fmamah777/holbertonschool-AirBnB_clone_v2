@@ -6,7 +6,6 @@ from sqlalchemy.orm import relationship
 from os import getenv
 
 
-
 place_amenity = Table('place_amenity', Base.metadata,
                       Column('place_id', String(60),
                              ForeignKey('places.id'),
@@ -37,7 +36,7 @@ class Place(BaseModel, Base):
         amenities = relationship('Amenity', secondary=place_amenity,
                                  back_populates='place_amenities',
                                  viewonly=False)
-    
+
     else:
         @property
         def reviews(self):
