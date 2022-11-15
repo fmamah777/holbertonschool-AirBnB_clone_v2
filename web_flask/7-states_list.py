@@ -6,10 +6,17 @@ from models import storage
 
 app = Flask(__name__)
 
+
+@app.teardown_appcontext
+def teardown(stuff):
+    """tears down the session"""
+    storage.close()
+
+
 @app.route("/states_list", strict_slashes=False)
 def states_list():
     """prints html with list of all states"""
-    state_dict = storage.all()
+    state_dict = storage.all(State)
     return render_template('7-states_list.html', states=states.values())
 
 if __name__ == "__main__":
