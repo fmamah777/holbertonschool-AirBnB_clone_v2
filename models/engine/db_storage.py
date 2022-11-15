@@ -18,7 +18,7 @@ class DBStorage():
 
     __engine = None
     __session = None
-    
+
     def __init__(self):
         user = os.getenv("HBNB_MYSQL_USER")
         password = os.getenv("HBNB_MYSQL_PWD")
@@ -34,7 +34,7 @@ class DBStorage():
         """lists all objects of class, or objects of all classes
         if none specified"""
         classes = {'User': User, 'State': State, 'City': City,
-               'Amenity': Amenity, 'Place': Place, 'Review': Review}
+                   'Amenity': Amenity, 'Place': Place, 'Review': Review}
         dict_all = {}
         if cls is None:
             for classname in classes.values():
