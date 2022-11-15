@@ -33,16 +33,15 @@ class DBStorage():
     def all(self, cls=None):
         """lists all objects of class, or objects of all classes
         if none specified"""
-        classes = {'User': User, 'State': State, 'City': City,
-                   'Amenity': Amenity, 'Place': Place, 'Review': Review}
+        classes = [User, State, City, Amenity, Place, Review]
         dict_all = {}
         if cls is None:
-            for classname in classes.values():
+            for classname in classes:
                 result = self.__session.query(classname).all()
                 for obj in result:
                     dict_all[f'{type(obj).__name__}.{obj.id}'] = obj
         else:
-            result = self.__session.query(classes[cls]).all()
+            result = self.__session.query(cls).all()
             for obj in result:
                 dict_all[f'{type(obj).__name__}.{obj.id}'] = obj
         return dict_all
