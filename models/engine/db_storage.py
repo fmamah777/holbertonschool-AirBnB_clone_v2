@@ -39,11 +39,11 @@ class DBStorage():
             for classname in classes:
                 result = self.__session.query(classname).all()
                 for obj in result:
-                    dict_all[f'{type(obj).__name__}.{obj.id}'] = obj
+                    dict_all['{}.{}'.format(type(obj).__name__, obj.id)] = obj
         else:
             result = self.__session.query(cls).all()
             for obj in result:
-                dict_all[f'{type(obj).__name__}.{obj.id}'] = obj
+                dict_all['{}.{}'.format(type(obj).__name__, obj.id)] = obj
         return dict_all
 
     def new(self, obj):
