@@ -3,6 +3,7 @@
 
 from flask import Flask, render_template
 from models import storage
+from models.state import State
 
 app = Flask(__name__)
 
@@ -17,7 +18,7 @@ def teardown(stuff):
 def states_list():
     """prints html with list of all states"""
     state_dict = storage.all(State)
-    return render_template('7-states_list.html', states=states.values())
+    return render_template('7-states_list.html', states=state_dict)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
