@@ -18,8 +18,19 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls is None:
+<<<<<<< HEAD
             return self.__objects
         return {k: v for k, v in self.__objects.items() if isinstance(v, cls)}
+=======
+            return FileStorage.__objects
+        else:
+            cls_objects = {}
+            for value in FileStorage.__objects.values():
+                if type(value) == cls:
+                    cls_objects.update({value.to_dict()['__class__'] +
+                                       '.' + value.id: value})
+            return cls_objects
+>>>>>>> ab8e3bc210730287e317579b1b978ff834094096
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -47,6 +58,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
+<<<<<<< HEAD
         """ Deletes an object from memory """
         if obj is not None:
             key = "{}.{}".format(type(obj).__name__, obj.id)
@@ -57,4 +69,15 @@ class FileStorage:
 
     def close(self):
         """ Call reload() method for deserializing the json objects """
+=======
+        """Deletes obj if its inside"""
+        if obj in self.__objects.values():
+            key = obj.__class__.__name__ + "." + obj.id
+            self.__objects.pop(key, None)
+        elif obj is None:
+            return
+
+    def close(self):
+        """closes session"""
+>>>>>>> ab8e3bc210730287e317579b1b978ff834094096
         self.reload()

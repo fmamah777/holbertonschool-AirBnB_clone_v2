@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <HTML lang="en">
+<<<<<<< HEAD
 	<HEAD>
 		<TITLE>HBNB</TITLE>
 	</HEAD>
@@ -24,4 +25,31 @@
 		{% endfor %}
 		{% endif %}
 	</BODY>
+=======
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
+    <BODY> 
+       {% if id is none %}
+        <H1>States</H1>
+            <UL>
+            {% for state in states | sort(attribute='name') %}
+                <LI>{{ state.id }}: <B>{{ state.name }}</B></LI>   
+            {% endfor %}
+            </UL>
+        {% else %}
+            {% if state_selected is not none %}
+                <H1>State: {{ state_selected.name }}</H1>
+                <H3>Cities:</H3>
+                <UL>
+                    {% for city in state_selected.cities | sort(attribute='name') %}
+                        <LI>{{ city.id }}: <B>{{city.name}}</B></LI>
+                    {% endfor %}
+                </UL>
+            {% else %}
+                <H1>Not found!</H1>
+            {% endif %}
+        {% endif %}
+            </BODY>
+>>>>>>> ab8e3bc210730287e317579b1b978ff834094096
 </HTML>
