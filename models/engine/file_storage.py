@@ -1,13 +1,7 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
-from models.base_model import BaseModel
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
+from os import getenv
 
 
 class FileStorage:
@@ -18,25 +12,20 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls is None:
-<<<<<<< HEAD
-            return self.__objects
-        return {k: v for k, v in self.__objects.items() if isinstance(v, cls)}
-=======
             return FileStorage.__objects
         else:
-            cls_objects = {}
-            for value in FileStorage.__objects.values():
-                if type(value) == cls:
-                    cls_objects.update({value.to_dict()['__class__'] +
-                                       '.' + value.id: value})
-            return cls_objects
->>>>>>> ab8e3bc210730287e317579b1b978ff834094096
+            classDict = {}
+            for val in FileStorage.__objects.values():
+                if type(val) == cls:
+                    classDict.update({val.to_dict()['__class__'] +
+                                      '.' + val.id: val})
+            return classDict
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        if obj:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            self.__objects[key] = obj
+        if obj.__dict__.get('_sa_instance_state'):
+            del obj.__dict__['_sa_instance_state']
+        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
     def save(self):
         """Saves storage dictionary to file"""
@@ -49,35 +38,36 @@ class FileStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.place import Place
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.review import Review
+
+        classes = {
+                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                    'State': State, 'City': City, 'Amenity': Amenity,
+                    'Review': Review
+                  }
         try:
-            with open(self.__file_path, 'r',) as f:
-                for key, value in (json.load(f)).items():
-                    value = eval(value["__class__"])(**value)
-                    self.__objects[key] = value
+            temp = {}
+            with open(FileStorage.__file_path, 'r') as f:
+                temp = json.load(f)
+                for key, val in temp.items():
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
-<<<<<<< HEAD
-        """ Deletes an object from memory """
-        if obj is not None:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            try:
-                del self.__objects[key]
-            except KeyError:
-                pass
+        """Deletes obj from __objects"""
+        if obj is None:
+            pass
+        for key, val in dict(FileStorage.__objects).items():
+            if val == obj:
+                del FileStorage.__objects[key]
 
     def close(self):
-        """ Call reload() method for deserializing the json objects """
-=======
-        """Deletes obj if its inside"""
-        if obj in self.__objects.values():
-            key = obj.__class__.__name__ + "." + obj.id
-            self.__objects.pop(key, None)
-        elif obj is None:
-            return
-
-    def close(self):
-        """closes session"""
->>>>>>> ab8e3bc210730287e317579b1b978ff834094096
+        """Calls reload"""
         self.reload()
